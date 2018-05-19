@@ -7,7 +7,7 @@ import arara from "assets/arara.primitive.svg";
 export default () =>
   <section className="section">
     <div className="container">
-      <h1 className="title">Progressive Image Loading examples</h1>
+      <h1 className="title">Click on the Image</h1>
     </div>
 
     <div className="container">
