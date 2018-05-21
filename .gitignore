@@ -3,6 +3,3 @@
 node_modules/
 dist/
 .idea/
-**/*.thumb.*
-**/*.trace.*
-**/*.primitive.*
