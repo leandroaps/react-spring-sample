@@ -8,7 +8,8 @@ const SVGContainer = ({ children }) => (
     width="1024"
     height="768"
   >
-    <g fillOpacity=".502">{children}</g>
+  <rect x="0" y="0" width="1024" height="768" fill="#607153" />
+  <g transform="scale(4.000000) translate(0.5 0.5)">{children}</g>
   </svg>
 );
 
@@ -21,15 +22,6 @@ export default class PrimitiveTransition extends PureComponent {
     return fetch(path)
       .then(res => res.text())
       .then(svg => parser.parseFromString(svg, "image/svg+xml"));
-  }
-
-  static PATH({fill, d}){
-    const props = {d};
-    if(typeof fill === "string"){
-        props.fill = fill;
-    }
-
-    return <animated.path {...props} />
   }
 
   componentWillMount() {
@@ -45,9 +37,9 @@ export default class PrimitiveTransition extends PureComponent {
   render() {
     const {showPrimary, primary, secondary } = this.state;
     if (!primary || !secondary) return null;
+    const nodes = [...(showPrimary? primary : secondary).querySelectorAll("polygon")];
 
-    const nodes = [...(showPrimary? primary : secondary).querySelectorAll("path")];
-
+    console.log(`${showPrimary? 'tucano' : 'arara'} svg: number of polygons ${nodes.length}`)
     return (
       <div onClick={() => this.setState({showPrimary: !showPrimary})}>
         <SVGContainer>
@@ -56,12 +48,12 @@ export default class PrimitiveTransition extends PureComponent {
               key={idx}
               native
               to={{
-                fillOpacity: 0.5,
-                fill:node.getAttribute("fill") || "#000",
-                d: node.getAttribute("d")
+                fillOpacity: node.getAttribute("fill-opacity"),
+                fill:node.getAttribute("fill"),
+                points: node.getAttribute("points")
               }}
             >{styles =>
-                <animated.path d={styles.d} fill={styles.fill} />
+                <animated.polygon {...styles} />
             }</Spring>
           ))}
         </SVGContainer>

@@ -48,8 +48,16 @@ module.exports = {
       }, {
         loader: "sass-loader"
       }]
-    }, {
+    },
+    {
       test: /\.(gif|png|jpe?g|svg)$/i,
+      use: [{
+        loader: "file-loader"
+      }]
+    },
+    {
+      test: /\.(gif|png|jpe?g|svg)$/i,
+      exclude: /\.primitive\.svg/,
       use: [{
           loader: 'url-loader',
           options: {
